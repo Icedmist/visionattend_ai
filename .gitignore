@@ -1,0 +1,58 @@
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+backend/venv/
+
+# Python Cache and Compiled Files
+__pycache__/
+*.py[cod]
+*$py.class
+backend/__pycache__/
+backend/*/__pycache__/
+
+# Node.js
+node_modules/
+frontend/node_modules/
+package-lock.json
+frontend/package-lock.json
+
+# SQLite Databases & data files
+backend/data/*.db
+backend/data/*.sqlite
+backend/data/*.sqlite3
+
+# Face scan assets (Keep empty folder placeholder, ignore content)
+backend/static/registered_faces/*
+!backend/static/registered_faces/.gitkeep
+backend/static/unknown_faces/*
+!backend/static/unknown_faces/.gitkeep
+
+# IDE / Editor folders
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Vite / Build outputs
+frontend/dist/
+dist/
+build/
+
+# Local Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

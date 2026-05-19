@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function StatsCard({ title, value, icon: Icon, colorClass, shadowClass, suffix = "" }) {
+export default function StatsCard({ title, value, icon, colorClass, shadowClass, suffix = "" }) {
   return (
     <div className="glass glass-hover p-6 rounded-2xl flex items-center justify-between relative overflow-hidden group">
       {/* Decorative Back Light */}
@@ -15,8 +15,9 @@ export default function StatsCard({ title, value, icon: Icon, colorClass, shadow
       </div>
 
       <div className={`p-4 rounded-xl ${colorClass} bg-opacity-10 text-white border border-opacity-20 flex items-center justify-center ${shadowClass} group-hover:scale-110 transition-transform duration-300`}>
-        <Icon className="w-6 h-6" />
+        {icon}
       </div>
     </div>
   );
 }
+

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend } from 'recharts';
-import { Users, UserCheck, TrendingUp, ShieldAlert, AlertTriangle, Eye, ShieldCheck, Sparkles, RefreshCw } from 'lucide-react';
+import { Users, UserCheck, TrendingUp, ShieldAlert, AlertTriangle, Eye, ShieldCheck, Sparkles, RefreshCw, HelpCircle } from 'lucide-react';
 import StatsCard from '../components/StatsCard';
+import OnboardingGuide from '../components/OnboardingGuide';
 
 export default function Dashboard() {
   const [stats, setStats] = useState({
@@ -14,6 +15,7 @@ export default function Dashboard() {
   });
   const [unknownRecords, setUnknownRecords] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showOnboarding, setShowOnboarding] = useState(localStorage.getItem('onboarding_completed') !== 'true');
 
   const loadData = async () => {
     setIsLoading(true);
@@ -44,6 +46,11 @@ export default function Dashboard() {
     const interval = setInterval(loadData, 15000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleCloseOnboarding = () => {
+    localStorage.setItem('onboarding_completed', 'true');
+    setShowOnboarding(false);
+  };
 
   // Format date labels nicely for the trend axis
   const formatTrendDate = (dateStr) => {
@@ -91,16 +98,32 @@ export default function Dashboard() {
           </p>
         </div>
         
-        {/* Realtime stream indicator */}
-        <button
-          onClick={loadData}
-          className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white transition-all duration-300 self-start"
-        >
-          <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-neon-cyan' : ''}`} />
-          <span>Real-time Stream</span>
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping inline-block ml-1" />
-        </button>
+        {/* Realtime stream indicator & Help Toggle */}
+        <div className="flex items-center gap-3 self-start">
+          <button
+            onClick={() => setShowOnboarding(true)}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white transition-all duration-300"
+          >
+            <HelpCircle className="w-3.5 h-3.5 text-neon-cyan" />
+            <span>Help Guide</span>
+          </button>
+
+          <button
+            onClick={loadData}
+            className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white transition-all duration-300 animate-fade-in"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-neon-cyan' : ''}`} />
+            <span>Real-time Stream</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping inline-block ml-1" />
+          </button>
+        </div>
       </div>
+
+      {/* Onboarding Wizard Panel */}
+      {showOnboarding && (
+        <OnboardingGuide onClose={handleCloseOnboarding} />
+      )}
+
 
       {/* Stats Cards Dashboard Widgets */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
