@@ -203,7 +203,7 @@ export default function App() {
             </div>
             
             <div className="glass p-6 rounded-3xl border border-slate-800">
-              <RegistrationForm />
+              <RegistrationForm token={token} />
             </div>
           </div>
         );
@@ -223,9 +223,10 @@ export default function App() {
       
       {/* Sidebar Nav Drawer */}
       <Sidebar
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        onLogout={handleLogout}
+        currentTab={activeTab}
+        setCurrentTab={setActiveTab}
+        isAdmin={isAuthenticated}
+        logout={handleLogout}
       />
 
       {/* Main Dynamic View Area */}
